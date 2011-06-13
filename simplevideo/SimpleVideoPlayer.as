@@ -13,7 +13,7 @@ package com.rettuce.simplevideo
 	 * ...
 	 * @author rettuce
 	 * 
-	 * 	player = new SimpleVideoPlayer(stage);
+	 * 	player = new SimpleVideoPlayer();
 	 * 	player.videoSet(videoWidth, videoHeight, $moviePath, autoPlayFlg, replayFlg );
 	 * 	addChild(player);
 	 * 
