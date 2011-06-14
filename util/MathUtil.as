@@ -30,19 +30,33 @@ package com.rettuce.util
 		
 		
 		/* 
-		 * MathUtil.dist(A:Object, B:Object):Number
-		 * 2点間距離を返す
+		* MathUtil.dist(A:Object, B:Object):Number
+		* 2点間距離を返す
 		*/
 		/////////////////////////////////////////////////////////////////////////
 		
-		static public function dist(a:Object, b:Object):Number
+		static public function length(a:Object, b:Object):Number
 		{
 			var dx:Number = b.x - a.x;
 			var dy:Number = b.y - a.y;
 			return Math.sqrt(dx * dx + dy * dy);
 		}
 		
-
+		
+		/* 
+		* MathUtil.angle(A:Object, B:Object):Number
+		* 2点間の角度（radian）を返す
+		*/
+		/////////////////////////////////////////////////////////////////////////
+		
+		static public function angle(a:Object, b:Object):Number
+		{
+			var dx:Number = b.x - a.x;
+			var dy:Number = b.y - a.y;
+			return Math.atan2(dy , dx);
+		}
+		
+		
 		/* 
 		* MathUtil.timeString(num:Number):String
 		* Numberを00:00でのStringで返す
