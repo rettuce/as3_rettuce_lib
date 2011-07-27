@@ -45,7 +45,8 @@ package com.rettuce.simplevideo
 		
 		public function SimpleVideo(width:int=320, height:int=240)
 		{
-			super(width, height);			
+			super(width, height);
+			smoothing = true;
 		}
 		
 		
@@ -110,6 +111,7 @@ package com.rettuce.simplevideo
 			//エラー
 			else if (e.info.level=="error") {
 				trace("Error : videoPlayer");
+				trace("Error : "+e.info.code);
 			}			
 		}
 		

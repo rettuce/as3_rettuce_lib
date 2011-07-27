@@ -100,6 +100,7 @@ package com.rettuce.simplevideo
 			videoUI.volume.addEventListener(MouseEvent.CLICK, volumeClickHandler );
 			
 			if(autoFlg) playHandler(null);
+			else pauseHandler(null);
 		}
 		
 		

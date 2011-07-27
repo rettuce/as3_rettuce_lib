@@ -76,9 +76,7 @@ package com.rettuce.simplevideo
 		}
 		// 停止
 		public function stopUI():void{
-			playFlg = false;
-			btn_play.visible  = true;
-			btn_pause.visible = false;
+			pauseUI();
 			
 			seek.bar.scaleX = 0;
 			seek.pointer.x = 0;
