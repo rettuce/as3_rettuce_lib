@@ -25,7 +25,8 @@ package com.rettuce.util
 		/////////////////////////////////////////////////////////////////////////
 		
 		static public function center(min:Number = 0, max:Number=1 ):Number{
-			return Math.round( (max - min)/2 );
+//			return Math.round( (max - min)/2 );
+			return int( (max - min)*0.5 + 0.5 );
 		}
 		
 		

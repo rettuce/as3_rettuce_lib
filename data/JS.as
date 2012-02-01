@@ -1,6 +1,7 @@
 package com.rettuce.data
 {
 	import com.adobe.serialization.json.JSON;
+	import com.demonsters.debugger.MonsterDebugger;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -18,8 +19,8 @@ package com.rettuce.data
 		/* Property */
 		/////////////////////////////////////////////////////////////////////////
 		
-		public static var param:Array = [];
-		
+		private var _param:Array = [];
+		public function get param():Array{ return _param };
 		
 		
 		/* 
@@ -46,7 +47,7 @@ package com.rettuce.data
 			e.target.removeEventListener(Event.COMPLETE, jsDeco);
 			
 			var json:String = URLLoader(e.currentTarget).data as String;			
-			param = JSON.decode(json);
+			_param = JSON.decode(json);
 			dispatchEvent(new Event(Event.COMPLETE));			
 		}
 	}	

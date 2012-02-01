@@ -18,7 +18,7 @@ package com.rettuce.util
 			var newArr:Array = arr;
 			while(l){
 				var m:uint = Math.floor(Math.random()*l);
-				var n = newArr[--l];
+				var n:Object = newArr[--l];
 				newArr[l] = newArr[m];
 				newArr[m] = n;
 			}

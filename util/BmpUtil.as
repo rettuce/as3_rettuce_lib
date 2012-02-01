@@ -25,8 +25,8 @@ package com.rettuce.util
 			var perH:Number = h / bm.height ;			
 			per = Math.max( perW, perH );
 			
-			var bmX = Math.floor(( w - bm.width * per ) / 2 );
-			var bmY = Math.floor(( h - bm.height * per ) / 2 );
+			var bmX:int = Math.floor(( w - bm.width * per ) >> 1 );
+			var bmY:int = Math.floor(( h - bm.height * per ) >> 1 );
 			
 			var mat:Matrix = new Matrix();
 			mat.scale( per, per );
