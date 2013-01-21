@@ -16,7 +16,7 @@ package com.rettuce.graph
 		/* Pie 描画 function */
 		/////////////////////////////////////////////////////////////////////////////////////////////////
 		
-		// 描画関数  引数1：graphics　引数2：x　引数3：ｙ　引数4：半径　引数5：扇の角度始点　引数6：扇の角度終点　
+		/** 描画関数  引数1：graphics　引数2：x　引数3：ｙ　引数4：半径　引数5：扇の角度始点　引数6：扇の角度終点　*/
 		public static function drawPie(g:Graphics, x:Number, y:Number, r:Number, t1:Number, t2:Number ):void
 		{
 			// 曲線の分割数。多いほど近似の精度は高くなる。

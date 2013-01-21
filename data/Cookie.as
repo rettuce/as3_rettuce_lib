@@ -1,46 +1,23 @@
 package com.rettuce.data
 {
-	import flash.net.SharedObject;
-	
+	import flash.net.SharedObject;	
 	/**
-	 * ...
 	 * @author rettuce
-	 * 
 	 */
 	public class Cookie
 	{
-		
-		/* Property */
-		/////////////////////////////////////////////////////////////////////////
-		
-		private var _id:String;
-		
-		
-		
-		
-		/* Constructor 引数にSharedObject用IDを渡す */
-		/////////////////////////////////////////////////////////////////////////
-				
-		public function Cookie($id:String)
+		// Save
+		static public function save($id:String, $obj:Object):void
 		{
-			_id = $id;
-		}
-		
-		
-		
-		/* Save & Load */
-		/////////////////////////////////////////////////////////////////////////
-		
-		public function save($obj:Object):void
-		{
-			var shareObj:SharedObject = SharedObject.getLocal( _id, '/' );
+			var shareObj:SharedObject = SharedObject.getLocal( $id, '/' );
 			shareObj.data.object = $obj;
 			shareObj.flush();
 		}
 		
-		public function read():Object
+		// Load
+		static public function read($id:String):Object
 		{
-			var shareObj:SharedObject = SharedObject.getLocal( _id, '/' );
+			var shareObj:SharedObject = SharedObject.getLocal( $id, '/' );
 			return shareObj.data.object;
 		}
 		

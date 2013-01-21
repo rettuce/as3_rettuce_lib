@@ -38,7 +38,7 @@ package com.rettuce.time
 		
 		static public function timeObj($date:Date):Object
 		{
-			var wdays:Array = ['日','月','火','水','木','金','土'];
+			var wdays:Array = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
 			var obj:Object = new Object();
 			obj['year']  = $date.getFullYear();
 			obj['month'] = $date.getMonth() +1;

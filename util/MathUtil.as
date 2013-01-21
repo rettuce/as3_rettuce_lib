@@ -1,5 +1,7 @@
 package com.rettuce.util
 {
+	import funnel.SetPoint;
+
 	/**
 	 * ...
 	 * @author rettuce
@@ -7,35 +9,51 @@ package com.rettuce.util
 	public class MathUtil
 	{
 		
-		/* 
-		 * MathUtil.　random( min:Number, max:Number):Number
+		/** 
+		 * MathUtil.map( $value:Number, min1:Number, max1:Number, min2:Number, max2:Number ):Number<br>
+		 * analog入力(1024段階)を256段階に丸めるとか<br>
+		 * 0-1023 → 0-255 にスケーリングとか
+		 */
+		static public function map( $value:Number, min1:Number, max1:Number, min2:Number, max2:Number ):Number{
+			var val:Number = ($value-min1)*(max2-min2)/(max1-min1)+min2;
+			if( val < min2 ) val = min2;
+			else if( val > max2 ) val = max2;
+			return val;
+		}
+		
+		/** 
+		 * MathUtil.setPoint():Boolean<br>
+		 * 中間値となる閾値から+-分の不感帯を設定することで閾値を越えた値のぶれを削除する
+		 */
+		static public var isBool:Boolean = false;
+		static public function setPoint():Boolean{
+			return false;
+		}
+		
+		
+		
+		/** 
+		 * MathUtil.random( min:Number, max:Number):Number<br>
 		 * 2値間でのランダム整数値を返す
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
 		static public function random(min:Number = 0, max:Number=1):Number{
 			return Math.round(Math.random() * ( max - min ) + min);
 		}
 		
 		
-		/* 
-		 * MathUtil.center( min:Number, max:Number):Number
+		/** 
+		 * MathUtil.center( min:Number, max:Number):Number<br>
 		 * 2点間の差分*1/2を返す。センター配置用の整数値
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
 		static public function center(min:Number = 0, max:Number=1 ):Number{
-//			return Math.round( (max - min)/2 );
 			return int( (max - min)*0.5 + 0.5 );
 		}
 		
 		
-		/* 
-		* MathUtil.dist(A:Object, B:Object):Number
+		/**
+		* MathUtil.dist(A:Object, B:Object):Number<br>
 		* 2点間距離を返す
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
 		static public function length(a:Object, b:Object):Number
 		{
 			var dx:Number = b.x - a.x;
@@ -44,12 +62,10 @@ package com.rettuce.util
 		}
 		
 		
-		/* 
-		* MathUtil.angle(A:Object, B:Object):Number
+		/**
+		* MathUtil.angle(A:Object, B:Object):Number<br>
 		* 2点間の角度（radian）を返す
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
 		static public function angle(a:Object, b:Object):Number
 		{
 			var dx:Number = b.x - a.x;
@@ -58,12 +74,10 @@ package com.rettuce.util
 		}
 		
 		
-		/* 
-		* MathUtil.timeString(num:Number):String
+		/**
+		* MathUtil.timeString(num:Number):String<br>
 		* Numberを00:00でのStringで返す
-		*/
-		/////////////////////////////////////////////////////////////////////////
-		
+		*/		
 		static public function timeString(num:Number):String
 		{
 			var mm:int = Math.floor(num / 60);

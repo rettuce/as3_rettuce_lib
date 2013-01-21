@@ -71,7 +71,7 @@ package com.rettuce.ui
 			_pointer.stopDrag();
 			_dist = _pointer.x;
 			
-			_stage.removeEventListener(Event.ENTER_FRAME, upHandler );
+			_stage.removeEventListener(MouseEvent.MOUSE_UP, upHandler );
 			dispatchEvent(new Event(DragDrop.COMP));
 		}
 		

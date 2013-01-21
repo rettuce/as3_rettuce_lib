@@ -6,16 +6,14 @@ package com.rettuce.util
 	 */
 	public class ArrUtil
 	{
-		/* 
+		/**
 		 * ArrUtil.shuffle(Array):Array
 		 * 配列をシャッフルして戻す
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
-		static public function shuffle(arr:Array):Array
+		static public function shuffle(arr:*):*
 		{
 			var l:uint = arr.length;
-			var newArr:Array = arr;
+			var newArr:* = arr;
 			while(l){
 				var m:uint = Math.floor(Math.random()*l);
 				var n:Object = newArr[--l];

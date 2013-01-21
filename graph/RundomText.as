@@ -7,8 +7,6 @@ package com.rettuce.graph
 	import flash.events.EventDispatcher;
 	import flash.text.TextField;
 	
-	import org.hamcrest.object.nullValue;
-	
 	/**
 	 * ...
 	 * @author rettuce

@@ -9,21 +9,20 @@ package com.rettuce.util
 	 */
 	public class BmpUtil
 	{	
-		/* 
-		 * BmpUtil.resize(Bitmap, width, height);
-		 * 渡されたBitmapを決められた値（W,H）でリサイズして戻す
+		/** 
+		 * BmpUtil.resize(Bitmap, width, height, MaxFlg=true );<br />
+		 * 渡されたBitmapを決められた値（W,H）でリサイズして戻す。<br />
+		 * MaxFlgは長辺に合わせるか短辺に合わせるかを指定
 		*/
-		/////////////////////////////////////////////////////////////////////////
-		
-		static public function resize(bm:Bitmap, w:Number, h:Number ):Bitmap
+		static public function resize(bm:Bitmap, w:Number, h:Number, maxFlg:Boolean=true ):Bitmap
 		{			
-			var bmNew:Bitmap = new Bitmap( new BitmapData( w, h ));
+			var bmNew:Bitmap = new Bitmap( new BitmapData( w, h, true, 0x00000000 ));
 			bmNew.smoothing = true;
 			
 			var per:Number;
 			var perW:Number = w / bm.width;
 			var perH:Number = h / bm.height ;			
-			per = Math.max( perW, perH );
+			per = (maxFlg)? Math.max( perW, perH ) : Math.min(perW, perH) ;
 			
 			var bmX:int = Math.floor(( w - bm.width * per ) >> 1 );
 			var bmY:int = Math.floor(( h - bm.height * per ) >> 1 );

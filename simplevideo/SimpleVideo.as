@@ -3,6 +3,7 @@ package com.rettuce.simplevideo
 	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
+	import flash.events.IOErrorEvent;
 	import flash.events.NetStatusEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.media.SoundTransform;
@@ -14,10 +15,8 @@ package com.rettuce.simplevideo
 	 * ...
 	 * @author rettuce
 	 * 
-	 * 	var video:SimpleVideo = new SimpleVideo(videoWidth, videoHeight);
+	 * 	var video:SimpleVideo = addChild(new SimpleVideo(videoWidth, videoHeight)) as SimpleVideo;
 	 * 	video.setUrl($moviePath, autoPlayFlg, replayFlg );
-	 * 	addChild(video);
-	 * 
 	 */
 	public class SimpleVideo extends Video
 	{
@@ -38,28 +37,30 @@ package com.rettuce.simplevideo
 		private var autoFlg:Boolean = false;
 		private var replayFlg:Boolean = false;
 		
+		public function get netconnection():NetConnection{ return nc }
+		public function get netstream():NetStream{ return ns }
 		
-				
-		/* Constructor */
-		/////////////////////////////////////////////////////////////////////////
-		
+		/** 
+		 * Constructor<br />
+		 * VIDEO WIDTH, VIDEO HEIGHT
+		 */		
 		public function SimpleVideo(width:int=320, height:int=240)
 		{
 			super(width, height);
 			smoothing = true;
+			
+			addEventListener(Event.REMOVED, function(e:Event):void{
+				this.stop();
+				if(nc) nc.close();
+			});
 		}
 		
 		
-		
-		
-		/* 
-		 * Set URL
-		 * VIDEO SRC PATH, AUTO PLAY?, REPLAY PLAY?
-		*/
-		/////////////////////////////////////////////////////////////////////////
-		
-		public function setUrl(url:String, $vol:Number = 0.5,
-							   $autoFlg:Boolean = false, $replayFlg:Boolean = false):void
+		/** 
+		 * Set URL<br />
+		 * VIDEO SRC PATH, VOLUME?, AUTO PLAY?, REPLAY?
+		 */
+		public function setUrl(url:String, $vol:Number = 0.5, $autoFlg:Boolean = false, $replayFlg:Boolean = false):void
 		{
 			URL = url;
 			vol = $vol;
@@ -68,17 +69,24 @@ package com.rettuce.simplevideo
 			
 			nc = new NetConnection();
 			nc.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
+			nc.addEventListener(IOErrorEvent.IO_ERROR, function (e:IOErrorEvent):void {
+				trace ("NetConnection IOError..."+e);
+			});
 			nc.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
 			nc.connect(null);			
 		}
 		
 		private function onNetStatus(e:NetStatusEvent):void
 		{
-			if (e.info.code=="NetConnection.Connect.Success") {
+			if (e.info.code=="NetConnection.Connect.Success")
+			{
 				//ストリームの生成
 				ns = new NetStream(nc);
 				ns.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
 				ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
+				ns.addEventListener(IOErrorEvent.IO_ERROR, function(e:IOErrorEvent):void{
+					trace ("NetStream IOError..."+e);					
+				});
 				
 				//メタデータの取得
 				var obj:Object=new Object();
@@ -110,7 +118,6 @@ package com.rettuce.simplevideo
 			}
 			//エラー
 			else if (e.info.level=="error") {
-				trace("Error : videoPlayer");
 				trace("Error : "+e.info.code);
 			}			
 		}
@@ -149,7 +156,7 @@ package com.rettuce.simplevideo
 		// 停止
 		public function stop():void{
 			ns.pause();
-			ns.seek(0);
+//			ns.seek(0);
 			playFlg = false;
 		}
 		// 再生ヘッダ移動
@@ -165,11 +172,39 @@ package com.rettuce.simplevideo
 		// 音量
 		public function volume(num:Number):void
 		{
-			if(num > 1) return;
+//			if(num > 1) return;
 			var st:SoundTransform = ns.soundTransform;
 			st.volume = num;
 			ns.soundTransform = st;
 		}
+		
+		
+		
+		
+		/* All Clear */
+		/////////////////////////////////////////////////////////////////////////
+		
+		public function allClear():void
+		{
+			if(ns){
+				close();
+				ns.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
+				ns.removeEventListener(AsyncErrorEvent.ASYNC_ERROR, onAsyncError);
+				ns.removeEventListener(IOErrorEvent.IO_ERROR, function(e:IOErrorEvent):void{
+					trace ("NetStream IOError..."+e);					
+				});
+				ns = null;
+				
+				nc.removeEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
+				nc.removeEventListener(IOErrorEvent.IO_ERROR, function (e:IOErrorEvent):void {
+					trace ("NetConnection IOError..."+e);
+				});
+				nc.removeEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				nc = null;
+			}
+			clear();
+		}
+		
 		
 		
 		

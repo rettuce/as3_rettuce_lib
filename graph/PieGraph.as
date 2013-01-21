@@ -27,7 +27,9 @@ package com.rettuce.graph
 		private var _radius:Number;	// 半径
 		private var _color:Number;
 		
-		// 0-100% の範囲で start, end, radius, color を設定　
+		/**
+		 * 0-100% の範囲で start, end, radius, color を設定　
+		*/
 		public function createGraph( $start:Number=0, $end:Number=30, $radius:Number=100, $color:Number=0x000000 ):void
 		{
 			_start = $start * Math.PI/180;
