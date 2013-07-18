@@ -23,15 +23,19 @@ package com.rettuce.graph
 		private var _now:Number;	// 現在 radian
 		private var _cnt:Number;	// 追加 radian
 		
-		private var _speed:Number = 0.12;
+		public var _speed:Number = 0.12;
 		private var _radius:Number;	// 半径
 		private var _color:Number;
+		
+		private var _isRunning:Boolean = false;
 		
 		/**
 		 * 0-100% の範囲で start, end, radius, color を設定　
 		*/
 		public function createGraph( $start:Number=0, $end:Number=30, $radius:Number=100, $color:Number=0x000000 ):void
 		{
+			if(_isRunning) removeEventListener( Event.ENTER_FRAME, arguments.callee );
+			
 			_start = $start * Math.PI/180;
 			_end   = $end   * Math.PI/180;
 			_radius=$radius;
@@ -41,9 +45,12 @@ package com.rettuce.graph
 			
 			_now = _cnt = _start;
 			
+			_isRunning = true;
+			
 			addEventListener( Event.ENTER_FRAME, function():void{
 				
 				if( _cnt >= _end ){
+					_isRunning = false;
 					removeEventListener( Event.ENTER_FRAME, arguments.callee );
 					g.clear();
 					g.beginFill(_color);

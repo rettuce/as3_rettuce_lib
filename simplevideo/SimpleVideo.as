@@ -36,9 +36,10 @@ package com.rettuce.simplevideo
 		private var playFlg:Boolean = false;
 		private var autoFlg:Boolean = false;
 		private var replayFlg:Boolean = false;
+		public var isLoaded:Boolean = false;
 		
 		public function get netconnection():NetConnection{ return nc }
-		public function get netstream():NetStream{ return ns }
+		public function get netstream():NetStream{ return ns }		
 		
 		/** 
 		 * Constructor<br />
@@ -49,8 +50,10 @@ package com.rettuce.simplevideo
 			super(width, height);
 			smoothing = true;
 			
-			addEventListener(Event.REMOVED, function(e:Event):void{
-				this.stop();
+			addEventListener(Event.REMOVED, function(e:Event):void
+			{
+				removeEventListener(Event.REMOVED, arguments.callee );
+//				this.stop();
 				if(nc) nc.close();
 			});
 		}
@@ -104,7 +107,7 @@ package com.rettuce.simplevideo
 				if(!autoFlg){
 					//一旦停止
 					ns.pause();
-				}
+				}				
 			}
 			//再生
 			else if (e.info.code == "NetStream.Play.Start"){
@@ -123,7 +126,9 @@ package com.rettuce.simplevideo
 		}
 		
 		//メタデータ取得イベントのコールバック処理
-		private function onMetaData($info:Object):void {
+		private function onMetaData($info:Object):void 
+		{
+			isLoaded = true;
 			info = $info;
 			dispatchEvent(new Event(SimpleVideo.INFO_COMP));
 		}

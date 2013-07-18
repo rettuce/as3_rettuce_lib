@@ -23,5 +23,11 @@ package com.rettuce.debug
 				catch(e:Error){}
 			}			
 		}
+		
+		static public function getQuery():String
+		{
+			return String(ExternalInterface.call("function() { return window.location.search; }"));
+		}
+		
 	}
 }

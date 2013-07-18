@@ -12,7 +12,29 @@ package com.rettuce.util
 	{
 		
 		/**
-		 * PostUtil.post( 'request.php', [{ key:'hoge_id', value:'AAAA' }], completeHandler:Function );
+		 * 
+		 * PostUtil.post( Param.API_HOST + Param.API_REGISTER_USER,
+		 * 	[
+		 * 		{ key:'user_seq', value:Data.user_seq }
+		 * 	],
+		 * 	compJoin );
+		 * 
+		 * function compJoin(e:Event):void
+		 * {
+		 * 		URLLoader(e.target).removeEventListener(Event.COMPLETE, arguments.callee );
+		 * 		if(!e.target.data){
+		 * 			trace('*** '+Param.API_HOST + Param.API_JOIN+'  API Load Error.');	
+		 * 			return;
+		 * 		}
+		 * 		var obj:Object = JSON.parse(String(e.target.data));
+		 * 		if(obj.status=="0")
+		 * 		{
+		 * 			Data.user_seq = obj.user_seq;
+		 * 			loadcheck();
+		 * 		}else{
+		 * 			trace('*** '+Param.API_HOST + Param.API_JOIN+'  API Status Error.');	
+		 * 		}			
+		 * 	}
 		 * 
 		 */
 		static public function post( $url:String, $value:Array, $func:Function ):void

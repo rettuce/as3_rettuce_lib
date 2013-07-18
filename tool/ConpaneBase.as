@@ -23,7 +23,7 @@ package com.rettuce.tool
 		
 		protected var _stage:Stage;		
 		protected var _conpane:Sprite;
-		protected var _info:Text;
+		protected var _info:TextArea;
 		protected var _open:PushButton, _close:PushButton;
 		
 		public function ConpaneBase($stage:Stage, $W:Number=290, $H:Number=300 )
@@ -54,7 +54,7 @@ package com.rettuce.tool
 			_open.height = 15;
 			_open.visible = false;
 						
-			_info = new Text(_conpane, WIDTH-105, 25, "");
+			_info = new TextArea(_conpane, WIDTH-105, 25, "");
 			_info.width  = 100;
 			_info.height = HEIGHT - 30;
 						
@@ -75,6 +75,6 @@ package com.rettuce.tool
 		/**
 		 * OverRide用
 		**/
-		public function conpaneMain():void{}
+		protected function conpaneMain():void{}
 	}
 }
